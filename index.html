@@ -15,11 +15,13 @@
         }       
         
         body {
-            font-family:"Prosto One" ;
+            font-family:"Prosto One";
             background: var(--abyss);
             color: white;
             overflow-x: hidden;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
         /* Фон с пузырями и глубиной */
@@ -84,10 +86,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .nav-logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--biolum);
             text-decoration: none;
@@ -98,6 +101,9 @@
         .nav-menu {
             display: flex;
             gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-link {
@@ -106,7 +112,6 @@
             font-weight: 600;
             position: relative;
             padding: 0.5rem 0;
-            list-style-type: none;
         }
 
         .nav-link::after {
@@ -119,12 +124,21 @@
             background: var(--biolum);
             transition: width 0.3s;
             box-shadow: 0 0 10px var(--biolum);
-            list-style-type: none;
         }
 
         .nav-link:hover::after {
             width: 100%;
-            
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--biolum);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0.5rem;
         }
 
         .deep-hero {
@@ -133,9 +147,9 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            background:url("mv_aquarium01-pc.jpg");
-            background-size:cover;
-    }
+            background: url("mv_aquarium01-pc.jpg") center/cover no-repeat;
+            margin-top: 80px;
+        }
 
         .hero-content {
             width: 90%;
@@ -143,34 +157,36 @@
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            padding: 2rem;
         }
 
         .hero-title {
-            font-size: 5rem;
+            font-size: 3.5rem;
             font-weight: 1000;
             margin-bottom: 1.5rem;
             background: linear-gradient(to right, var(--foam), var(--biolum));
             -webkit-background-clip: text;
             background-clip: text;
-            color:#040B34;
+            color: transparent;
             line-height: 1.1;
             text-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             max-width: 600px;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             color: rgba(168, 230, 255, 0.9);
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .deep-btn {
-            padding: 1rem 2.5rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -178,6 +194,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            font-size: 1rem;
         }
 
         .btn-primary {
@@ -202,25 +219,30 @@
             color: var(--foam);
         }
 
-        
         .deep-section {
-            padding: 8rem 0;
+            padding: 4rem 0;
             position: relative;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 3rem;
         }
 
         .section-title {
-            font-size: 3rem;
+            font-size: 2.2rem;
             margin-bottom: 1.5rem;
             color: var(--biolum);
         }
 
         .section-divider {
-            width: 100px;
+            width: 80px;
             height: 3px;
             background: linear-gradient(to right, var(--biolum), transparent);
             margin: 0 auto;
@@ -229,15 +251,15 @@
         /* Карточки */
         .deep-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
         .deep-card {
             background: rgba(1, 26, 56, 0.5);
             backdrop-filter: blur(5px);
             border-radius: 15px;
-            padding: 2.5rem;
+            padding: 1.8rem;
             transition: all 0.4s;
             border: 1px solid rgba(0, 225, 255, 0.1);
             position: relative;
@@ -262,31 +284,37 @@
         }
 
         .card-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--biolum);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--foam);}
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--foam);
+        }
+
+        .deep-card p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
         
         /* зоны */
-            
         .zone-container {
             display: flex;
             max-width: 1200px;
-            margin: 3rem auto;
+            margin: 2rem auto;
             background: rgba(1, 26, 56, 0.7);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            flex-direction: column;
         }
 
         .zone-photo {
             flex: 1;
-            min-height: 400px;
+            min-height: 250px;
         }
 
         .zone-photo img {
@@ -298,7 +326,7 @@
         
         .zone-info {
             flex: 1;
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -309,37 +337,37 @@
         .info-panel {
             background: rgba(0, 9, 19, 0.8);
             backdrop-filter: blur(10px);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             border: 1px solid rgba(0, 225, 255, 0.2);
         }
 
         .zone-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
             color: var(--biolum);
         }
 
         .zone-description {
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             opacity: 0.9;
         }
 
         .zone-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
         }
 
         .tag {
             background: rgba(0, 225, 255, 0.1);
             color: var(--biolum);
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border: 1px solid var(--biolum);
         }
 
@@ -350,6 +378,7 @@
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
         .zone-link i {
@@ -367,8 +396,8 @@
 
         /* Подвал */
         footer {
-            background: var(--deep-sea);
-            padding: 3rem 0;
+            background: var(--abyss);
+            padding: 2rem 0;
             border-top: 1px solid rgba(0, 225, 255, 0.2);
         }
 
@@ -376,19 +405,19 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 0 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
         }
 
         .footer-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .footer-title {
             color: var(--biolum);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
             position: relative;
             padding-bottom: 0.5rem;
         }
@@ -398,7 +427,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
+            width: 40px;
             height: 2px;
             background: var(--biolum);
         }
@@ -406,9 +435,10 @@
         .footer-links a {
             display: block;
             color: var(--foam);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             text-decoration: none;
             transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
@@ -417,19 +447,21 @@
 
         .contact-info {
             display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .contact-info i {
             color: var(--biolum);
-            margin-right: 1rem;
+            margin-right: 0.8rem;
             width: 20px;
             text-align: center;
+            margin-top: 3px;
         }
 
         .map-container {
-            height: 250px;
+            height: 200px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -445,12 +477,12 @@
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
             color: var(--foam);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             transition: color 0.3s;
         }
 
@@ -460,67 +492,41 @@
 
         .copyright {
             text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
             border-top: 1px solid rgba(0, 225, 255, 0.1);
             color: rgba(168, 230, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         /* Адаптивность */
-        @media (max-width: 768px) {
-            .zone-container {
-                flex-direction: column;
-            }
-            
-            .zone-photo {
-                min-height: 250px;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .zone-container {
-                flex-direction: column;
-            }
-            
-            .zone-photo {
-                min-height: 250px;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-        
-        @media (max-width: 768px) {
-            .zone-container {
-                flex-direction: column;
-            }
-            
-            .zone-photo {
-                min-height: 250px;
-            }
-      
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .hero-title {
                 font-size: 3rem;
             }
             
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .zone-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
                 top: 0;
                 right: -100%;
                 width: 70%;
                 height: 100vh;
-                background: rgba(0, 9, 19, 0.95);
+                background: rgba(0, 9, 19, 0.98);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                transition: right 0.3s;
+                transition: right 0.3s ease-in-out;
+                gap: 1.5rem;
             }
             
             .nav-menu.active {
@@ -529,24 +535,107 @@
             
             .menu-toggle {
                 display: block;
-                background: none;
-                border: none;
-                color: var(--biolum);
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .deep-btn {
+                padding: 0.7rem 1.5rem;
+            }
+            
+            .deep-section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .zone-title {
                 font-size: 1.5rem;
-                cursor: pointer;
-                z-index: 1001;
-            }       
+            }
+            
+            .zone-description {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-logo {
+                font-size: 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .deep-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .deep-card {
+                padding: 1.5rem;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info span {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .zone-container {
+
+                flex-direction: row;
+            }
+            
+            .zone-photo {
+                min-height: 350px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="deep-background">
         <div class="bubbles" id="bubbles"></div>
     </div>
-<div class="menu-toggle"></div>
+
     <nav class="deep-nav">
         <div class="nav-container">
             <a href="#" class="nav-logo">KAIYUKAN</a>
-            <ul class="nav-menu" style="list-style-type: none">
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Главная</a></li>
                 <li><a href="exhibits.html" class="nav-link">Отзывы</a></li>
                 <li><a href="tickets.html" class="nav-link">Билеты</a></li>
@@ -578,9 +667,7 @@
                         <i class="fas fa-fish-fins"></i>
                     </div>
                     <h3 class="card-title">Китовые акулы</h3>
-                    <p>Главные звёзды океанариума — величественные гиганты глубины.
-                        
-                    </p>
+                    <p>Главные звёзды океанариума — величественные гиганты глубины.</p>
                 </div>
                 <div class="deep-card">
                     <div class="card-icon">
@@ -598,35 +685,36 @@
                 </div>
             </div>
         </div>
-        <h2 class="section-title"  style="text-align: center; font-size: 2rem; margin-top: 5rem"  >Мы расскажем вам о живых существах и природной среде, сосредоточенной в Тихом океане</h2>
+        <h2 class="section-title" style="text-align: center; font-size: 1.8rem; margin-top: 3rem; padding: 0 1rem;">Мы расскажем вам о живых существах и природной среде, сосредоточенной в Тихом океане</h2>
   
-    <!-- Карточка зоны 1 -->
-    <div class="zone-container">
-        <div class="zone-photo">
-            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_PacificOcean.jpg" alt="Тихий океан">
-        </div>
-        
-        <div class="zone-info">
-            <div class="info-panel">
-                <h2 class="zone-title">Тихий океан</h2>
-                <p class="zone-description">
-                    Тихий океан, на долю которого приходится 1/3 площади поверхности Земли, является домом для самых разных существ.В аквариуме обитает множество существ, в том числе величественная китовая акула, грациозно порхающие итомаки и стая гурукума.
-                </p>
-                
-                <div class="zone-tags">
-                    <span class="tag">Акулы</span>
-                    <span class="tag">Скаты</span>
+        <!-- Все зоны остаются без изменений в HTML -->
+        <!-- Карточка зоны 1 -->
+        <div class="zone-container">
+            <div class="zone-photo">
+                <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_PacificOcean.jpg" alt="Тихий океан">
+            </div>
+            
+            <div class="zone-info">
+                <div class="info-panel">
+                    <h2 class="zone-title">Тихий океан</h2>
+                    <p class="zone-description">
+                        Тихий океан, на долю которого приходится 1/3 площади поверхности Земли, является домом для самых разных существ.В аквариуме обитает множество существ, в том числе величественная китовая акула, грациозно порхающие итомаки и стая гурукума.
+                    </p>
+                    
+                    <div class="zone-tags">
+                        <span class="tag">Акулы</span>
+                        <span class="tag">Скаты</span>
+                    </div>
+                    
+                    <a href="#" class="zone-link">
+                        Посмотрите на существ в этом аквариуме
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                
-                <a href="#" class="zone-link">
-                    Посмотрите на существ в этом аквариуме
-                    <i class="fas fa-arrow-right"></i>
-                </a>
             </div>
         </div>
-    </div>
         
-    <!-- Карточка зоны 2 -->
+   <!-- Карточка зоны 2 -->
     <div class="zone-container">
         <div class="zone-photo">
             <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_TasmanSea.jpg" alt="Тасманово море">
@@ -957,7 +1045,7 @@
                 </p>
                 
                 <div class="zone-tags">
-                    <span class="tag">Дельфины</span>
+                    <span class="tag">Пингвины</span>
                 </div>
                 
                 <a href="#" class="zone-link">
@@ -967,6 +1055,8 @@
             </div>
         </div>
     </div>     
+        
+    </section>
         
     </section>
     <footer>
@@ -1011,21 +1101,21 @@
         </div>
 
         <div class="copyright">
-            &copy; 2023 Океанариум KAIYUKAN. Все права защищены.
+            &copy; 2025 Океанариум KAIYUKAN сайт сделан в учебных целях
         </div>
     </footer>
     <script>
         // Создание пузырей
         function createBubbles() {
             const container = document.getElementById('bubbles');
-            const bubbleCount = 30;
+            const bubbleCount = 20;
             
             for (let i = 0; i < bubbleCount; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
                 
                 // Рандомные параметры
-                const size = Math.random() * 40 + 10;
+                const size = Math.random() * 30 + 10;
                 const left = Math.random() * 100;
                 const delay = Math.random() * 5;
                 const duration = Math.random() * 10 + 10;
@@ -1048,6 +1138,14 @@
             navMenu.classList.toggle('active');
             menuToggle.innerHTML = navMenu.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
         
         // Плавный скролл
