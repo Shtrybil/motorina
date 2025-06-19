@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIYUKAN - Отзывы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Prosto+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+   
+        :root {
+            --abyss: #000913;
+            --midnight: #011a38;
+            --biolum: #00e1ff;
+            --foam: #a8e6ff;
+            --deep-sea: #00152e;
+        }
+        
+        body {
+            font-family: 'Prosto One', sans-serif;
+            background: var(--abyss);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Навигация (как в других страницах) */
+        .deep-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(1, 26, 56, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 225, 255, 0.2);
+        }
+        
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--biolum);
+            text-decoration: none;
+            letter-spacing: 3px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--foam);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        /* Основное содержимое */
+        .reviews-section {
+            padding: 120px 2rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--biolum);
+            margin-bottom: 3rem;
+            text-shadow: 0 0 15px rgba(0, 225, 255, 0.3);
+        }
+        
+        /* Слайдер отзывов */
+        .reviews-slider {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .reviews-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .review-card {
+            min-width: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        
+        .review-content {
+            background: rgba(1, 26, 56, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .review-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 2rem;
+            border: 3px solid var(--biolum);
+            flex-shrink: 0;
+        }
+        
+        .review-text {
+            flex: 1;
+        }
+        
+        .review-name {
+            font-size: 1.5rem;
+            color: var(--biolum);
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-date {
+            color: rgba(168, 230, 255, 0.6);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .review-message {
+            line-height: 1.6;
+            color: var(--foam);
+        }
+        
+        .read-more {
+            color: var(--biolum);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        /* Кнопки навигации слайдера */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 225, 255, 0.1);
+            border: 1px solid var(--biolum);
+            color: var(--biolum);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .slider-btn:hover {
+            background: var(--biolum);
+            color: var(--abyss);
+        }
+        
+        /* Индикаторы слайдов */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 0.5rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 225, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background: var(--biolum);
+            transform: scale(1.2);
+        }
+        
+        /* Подвал */
+        footer {
+            background: var(--deep-sea);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 225, 255, 0.2);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            color: var(--biolum);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--biolum);
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--foam);
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--biolum);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info i {
+            color: var(--biolum);
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 225, 255, 0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--foam);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--biolum);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0, 225, 255, 0.1);
+            color: rgba(168, 230, 255, 0.7);
+            font-size: 0.9rem;
+        }        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .review-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .review-photo {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-toggle"></div>
+    <nav class="deep-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">KAIYUKAN</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="exhibits.html" class="nav-link">Отзывы</a></li>
+                <li><a href="tickets.html" class="nav-link">Билеты</a></li>
+                <li><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="reviews-section">
+        <h1 class="section-title">Отзывы посетителей</h1>
+        
+        <div class="reviews-slider">
+            <div class="reviews-container" id="reviewsContainer">
+                <!-- Отзыв 1 -->
+                <div class="review-card">
+                    <div class="review-content">
+                        <img src="ria.jpg" alt="Дарья" class="review-photo">
+                        <div class="review-text">
+                            <h3 class="review-name">КУРМАЕВА ДАРЬЯ</h3>
+                            <div class="review-date">Посетили 23.05.2025</div>
+                            <p class="review-message">
+                                Ходили с подругами. Взяли экскурсию на один час по аквариуму, 
+                                потом ещё час гуляли сами! Экскурсия впечатлила нестандартными подходами, было интересно! 
+                                Особенно понравилась зона с китовыми акулами...
+                            </p>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 2 -->
+                <div class="review-card">
+                    <div class="review-content">
+                        <img src="https://sun9-45.userapi.com/s/v1/ig2/u4g475sTgc5pnDigZMU-o8i8UUomBp7-ZjCYpT6lgnhyStNiCTBtmiroFZfEB3jD1YFRfnp3TTR3y40LTpx4jLuE.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,1080x1440,1280x1707,1440x1920,1920x2560&from=bu&u=nPKYXPqlChBWEcXag2gHCb9EYxgYlxyOtCd05E-dUcA&cs=810x1080" alt="Дмитрий" class="review-photo">
+                        <div class="review-text">
+                            <h3 class="review-name">КОРОТКИХ ТАТЬЯНА</h3>
+                            <div class="review-date">Посетили 07.06.2025</div>
+                            <p class="review-message">
+                                Потрясающее место! Никогда не видела такого разнообразия морских обитателей. 
+                                Дельфины просто завораживают! Обязательно вернемся снова. Персонал очень внимательный 
+                                и знающий. Особенно понравились тюленчики ^^
+                            </p>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 3 -->
+                <div class="review-card">
+                    <div class="review-content">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Анна" class="review-photo">
+                        <div class="review-text">
+                            <h3 class="review-name">АННА КУЗНЕЦОВА</h3>
+                            <div class="review-date">Посетили 12.03.2025</div>
+                            <p class="review-message">
+                                Были с маленьким ребенком (3 года) - в восторге! Особенно понравилась зона 
+                                с пингвинами и возможность посмотреть кормление животных. Ребенок до сих пор 
+                                вспоминает огромных скатов. Персонал очень дружелюбный, есть где перекусить!
+                            </p>
+                            <a href="#" class="read-more">Читать дальше <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Навигация слайдера -->
+            <div class="slider-nav">
+                <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Индикаторы -->
+            <div class="slider-dots" id="sliderDots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </section>
+        <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">KAIYUKAN</h3>
+                <p>Один из самых больших и красивых океанариумов мира, расположенный в Осаке, Япония.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>1-1-10 Kaigandori, Minato-ku, Osaka 552-0022</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>+81 6-6576-5501</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@kaiyukan.com</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <span> график 10:00 - 20:00 </span>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Как добраться</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.016410680832!2d135.4098433155936!3d34.654438880439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e655b05f190f%3A0x3a3a3a3a3a3a3a3a!2sKaiyukan!5e0!3m2!1sen!2sjp!4v1620000000000!5m2!1sen!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2025 Океанариум KAIYUKAN сайт сделан в учебных целях
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('reviewsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dots = document.querySelectorAll('.dot');
+            let currentIndex = 0;
+            const reviewCount = document.querySelectorAll('.review-card').length;
+            
+            // Функция обновления слайдера
+            function updateSlider() {
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Обновляем активную точку
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Кнопка "Далее"
+            nextBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex + 1) % reviewCount;
+                updateSlider();
+            });
+            
+            // Кнопка "Назад"
+            prevBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex - 1 + reviewCount) % reviewCount;
+                updateSlider();
+            });
+            
+            // Клик по точкам
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
+            // Автопрокрутка (опционально)
+            setInterval(function() {
+                currentIndex = (currentIndex + 1) % reviewCount;
+                updateSlider();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

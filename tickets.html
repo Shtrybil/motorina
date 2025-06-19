@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIYUKAN - Билеты</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Prosto+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>            
+        :root {
+            --abyss: #000913; 
+            --midnight: #011a38; 
+            --biolum: #00e1ff; 
+            --foam: #a8e6ff;
+            --deep-sea: #00152e;
+        }       
+        
+        body {
+            font-family:"Prosto One";
+            background: var(--abyss);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Фон с пузырями и глубиной */
+        .deep-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, var(--midnight) 0%, var(--abyss) 100%);
+        }
+
+        /* Пузыри */
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(0, 225, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+        }
+        
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { bottom: 1000px; transform: translateX(-100px) scale(1.2); opacity: 0; }
+        }
+        
+        /* Навигация */
+        .deep-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(1, 26, 56, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 225, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .deep-nav.scrolled {
+            background: rgba(0, 9, 19, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 5px 30px rgba(0, 225, 255, 0.1);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--biolum);
+            text-decoration: none;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--foam);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--biolum);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px var(--biolum);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--foam);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        /* Секция с билетами */
+        .tickets-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .tickets-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--biolum);
+            text-shadow: 0 0 15px rgba(0, 225, 255, 0.3);
+        }
+        
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .ticket-card {
+            background: rgba(1, 26, 56, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 225, 255, 0.2);
+            border-color: var(--biolum);
+        }
+        
+        .ticket-type {
+            font-size: 1.8rem;
+            color: var(--foam);
+            margin-bottom: 1rem;
+        }
+        
+        .ticket-description {
+            color: rgba(168, 230, 255, 0.8);
+            margin-bottom: 1.5rem;
+            min-height: 60px;
+        }
+        
+        .ticket-price {
+            font-size: 2.5rem;
+            color: var(--biolum);
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .ticket-note {
+            font-size: 0.9rem;
+            color: rgba(168, 230, 255, 0.6);
+            margin-bottom: 1.5rem;
+        }
+        
+        .buy-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--biolum);
+            color: var(--abyss);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 225, 255, 0.4);
+        }
+        
+        /* Подвал */
+        footer {
+            background: var(--deep-sea);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 225, 255, 0.2);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            color: var(--biolum);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--biolum);
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--foam);
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--biolum);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info i {
+            color: var(--biolum);
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 225, 255, 0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--foam);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--biolum);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0, 225, 255, 0.1);
+            color: rgba(168, 230, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 70%;
+                height: calc(100vh - 80px);
+                background: rgba(0, 9, 19, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .tickets-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style> 
+</head>
+<body>
+    <div class="deep-background">
+        <div class="bubbles" id="bubbles"></div>
+    </div>
+ <div class="menu-toggle"></div>
+    <nav class="deep-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">KAIYUKAN</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="exhibits.html" class="nav-link">Отзывы</a></li>
+                <li><a href="tickets.html" class="nav-link">Билеты</a></li>
+                <li><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section class="tickets-section">
+            <h1 class="tickets-title">Купить билеты</h1>
+            
+            <div class="tickets-grid">
+                <!-- Взрослый билет -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">Взрослый</h3>
+                    <p class="ticket-description">Для посетителей от 16 лет и старше</p>
+                    <div class="ticket-price">2 700 ¥</div>
+                    <button class="buy-btn">Купить билет</button>
+                </div>
+                
+                <!-- Детский билет -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">Детский</h3>
+                    <p class="ticket-description">Для учащихся начальной и младшей средней школы (7-15 лет)</p>
+                    <div class="ticket-price">1 400 ¥</div>
+                    <button class="buy-btn">Купить билет</button>
+                </div>
+                
+                <!-- Детский (малыши) -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">Малыш</h3>
+                    <p class="ticket-description">Для детей от 3 до 6 лет</p>
+                    <div class="ticket-price">700 ¥</div>
+                    <p class="ticket-note">Бесплатно для детей младше 2 лет</p>
+                    <button class="buy-btn">Купить билет</button>
+                </div>
+                
+                <!-- Групповой билет -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">Групповой</h3>
+                    <p class="ticket-description">Для групп от 15 человек (скидка 10%)</p>
+                    <div class="ticket-price">2 430 ¥</div>
+                    <p class="ticket-note">Цена за одного взрослого</p>
+                    <button class="buy-btn">Забронировать</button>
+                </div>
+                
+                <!-- Годовой абонемент -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">Годовой абонемент</h3>
+                    <p class="ticket-description">Неограниченное посещение в течение года</p>
+                    <div class="ticket-price">5 500 ¥</div>
+                    <button class="buy-btn">Приобрести</button>
+                </div>
+                
+                <!-- VIP билет -->
+                <div class="ticket-card">
+                    <h3 class="ticket-type">VIP Experience</h3>
+                    <p class="ticket-description">Экскурсия с гидом + кормление животных</p>
+                    <div class="ticket-price">8 000 ¥</div>
+                    <button class="buy-btn">Забронировать</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">KAIYUKAN</h3>
+                <p>Один из самых больших и красивых океанариумов мира, расположенный в Осаке, Япония.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>1-1-10 Kaigandori, Minato-ku, Osaka 552-0022</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>+81 6-6576-5501</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@kaiyukan.com</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <span>10:00 - 20:00 (последний вход в 19:00)</span>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Как добраться</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.016410680832!2d135.4098433155936!3d34.654438880439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e655b05f190f%3A0x3a3a3a3a3a3a3a3a!2sKaiyukan!5e0!3m2!1sen!2sjp!4v1620000000000!5m2!1sen!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2023 Океанариум KAIYUKAN. Все права защищены.
+        </div>
+    </footer>
+    
+    <script>
+        // Создание пузырей
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            const bubbleCount = 30;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Рандомные параметры
+                const size = Math.random() * 40 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(bubble);
+            }
+        }
+        
+        // Мобильное меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Плавный скролл
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if(this.getAttribute('href') !== '#') {
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                
+                if(navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+        
+        // Эффект при скролле для навигации
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.deep-nav');
+            if(window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        window.addEventListener('load', createBubbles);
+    </script>
+</body>
+</html>

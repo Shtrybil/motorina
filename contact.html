@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIYUKAN - Контакты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Prosto+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --abyss: #000913;
+            --midnight: #011a38;
+            --biolum: #00e1ff;
+            --foam: #a8e6ff;
+            --deep-sea: #00152e;
+        }
+        
+        body {
+            font-family: 'Prosto One', sans-serif;
+            background: var(--abyss);
+            color: white;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        /* Фон с пузырями */
+        .deep-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, var(--midnight) 0%, var(--abyss) 100%);
+        }
+        
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(0, 225, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+        }
+        
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { bottom: 1000px; transform: translateX(-100px) scale(1.2); opacity: 0; }
+        }
+        
+        /* Навигация */
+        .deep-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(1, 26, 56, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 225, 255, 0.2);
+        }
+        
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--biolum);
+            text-decoration: none;
+            letter-spacing: 3px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--foam);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .contacts-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            color: var(--biolum);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 15px rgba(0, 225, 255, 0.3);
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+        
+        /* Форма обратной связи */
+        .contact-form {
+            background: rgba(1, 26, 56, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: var(--biolum);
+            margin-bottom: 1.5rem;
+
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--foam);
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 9, 19, 0.5);
+            border: 1px solid rgba(0, 225, 255, 0.3);
+            border-radius: 5px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--biolum);
+            box-shadow: 0 0 10px rgba(0, 225, 255, 0.3);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--biolum);
+            color: var(--abyss);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 225, 255, 0.4);
+        }
+        
+        /* Контактная информация */
+        .contact-info {
+            background: rgba(1, 26, 56, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-icon {
+            color: var(--biolum);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            margin-top: 0.3rem;
+        }
+        
+        .info-content h3 {
+            color: var(--biolum);
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-content p {
+            color: var(--foam);
+            margin: 0;
+        }
+        
+        /* Карта */
+        .map-container {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 2rem;
+            border: 1px solid rgba(0, 225, 255, 0.3);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Подвал */
+        footer {
+            background: var(--deep-sea);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 225, 255, 0.2);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0, 225, 255, 0.1);
+            color: rgba(168, 230, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .contacts-section {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="deep-background">
+        <div class="bubbles" id="bubbles"></div>
+    </div>
+<div class="menu-toggle"></div>
+    <nav class="deep-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">KAIYUKAN</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="exhibits.html" class="nav-link">Отзывы</a></li>
+                <li><a href="tickets.html" class="nav-link">Билеты</a></li>
+                <li><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section class="contacts-section">
+            <h1 class="section-title">Свяжитесь с нами</h1>
+            
+            <!-- Форма обратной связи -->
+            <div class="contact-form">
+                <h2 class="form-title">Форма обратной связи</h2>
+                <form id="feedbackForm" action="https://formsubmit.co/motolisochka@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Тема</label>
+                        <input type="text" id="subject" name="subject" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить сообщение</button>
+                </form>
+            </div>
+            
+            <!-- Контактная информация -->
+            <div class="contact-info">
+                <h2 class="form-title">Контактная информация</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Адрес</h3>
+                        <p>1-1-10 Kaigandori, Minato-ku, Osaka 552-0022, Japan</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Телефон</h3>
+                        <p>+81 6-6576-5501</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p>info@kaiyukan.com</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Часы работы</h3>
+                        <p>Ежедневно: 10:00 - 20:00<br>(Последний вход в 19:00)</p>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.016410680832!2d135.4098433155936!3d34.654438880439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e655b05f190f%3A0x3a3a3a3a3a3a3a3a!2sKaiyukan!5e0!3m2!1sen!2sjp!4v1620000000000!5m2!1sen!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="copyright">
+                &copy; 2023 Океанариум KAIYUKAN. Все права защищены.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Создание пузырей
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            const bubbleCount = 30;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 40 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(bubble);
+            }
+        }
+        
+        // Обработка формы
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Здесь можно добавить AJAX-отправку или оставить как есть для FormSubmit
+            this.submit();
+            
+            // Показ сообщения об успехе (можно реализовать модальное окно)
+            alert('Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+        
+        window.addEventListener('load', createBubbles);
+    </script>
+</body>
+</html>
