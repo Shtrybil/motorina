@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIYUKAN</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Prosto+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>            
+        :root {
+            --abyss: #000913; 
+            --midnight: #011a38; 
+            --biolum: #00e1ff; 
+            --foam: #a8e6ff; 
+        }       
+        
+        body {
+            font-family:"Prosto One" ;
+            background: var(--abyss);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Фон с пузырями и глубиной */
+        .deep-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, var(--midnight) 0%, var(--abyss) 100%);
+        }
+
+        /* Пузыри  */
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(0, 225, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+        }
+
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { bottom: 1000px; transform: translateX(-100px) scale(1.2); opacity: 0; }
+        }
+
+        /* Навигация*/
+        .deep-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(1, 26, 56, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 225, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .deep-nav.scrolled {
+            background: rgba(0, 9, 19, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 5px 30px rgba(0, 225, 255, 0.1);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--biolum);
+            text-decoration: none;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--foam);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 0;
+            list-style-type: none;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--biolum);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px var(--biolum);
+            list-style-type: none;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            
+        }
+
+        .deep-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:url("mv_aquarium01-pc.jpg");
+            background-size:cover;
+    }
+
+        .hero-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 1000;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--foam), var(--biolum));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color:#040B34;
+            line-height: 1.1;
+            text-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: rgba(168, 230, 255, 0.9);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .deep-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--biolum);
+            color: var(--abyss);
+            box-shadow: 0 0 20px rgba(0, 225, 255, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 225, 255, 0.8);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--biolum);
+            color: var(--biolum);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 225, 255, 0.1);
+            color: var(--foam);
+        }
+
+        
+        .deep-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--biolum);
+        }
+
+        .section-divider {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--biolum), transparent);
+            margin: 0 auto;
+        }
+
+        /* Карточки */
+        .deep-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .deep-card {
+            background: rgba(1, 26, 56, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            border: 1px solid rgba(0, 225, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deep-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 225, 255, 0.2);
+            border-color: var(--biolum);
+        }
+
+        .deep-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 225, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--biolum);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--foam);}
+        
+        /* зоны */
+            
+        .zone-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 3rem auto;
+            background: rgba(1, 26, 56, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .zone-photo {
+            flex: 1;
+            min-height: 400px;
+        }
+
+        .zone-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .zone-info {
+            flex: 1;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Полупрозрачная панель */
+        .info-panel {
+            background: rgba(0, 9, 19, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 225, 255, 0.2);
+        }
+
+        .zone-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--biolum);
+        }
+
+        .zone-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .zone-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(0, 225, 255, 0.1);
+            color: var(--biolum);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--biolum);
+        }
+
+        .zone-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--biolum);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .zone-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .zone-link:hover {
+            color: var(--foam);
+        }
+
+        .zone-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Подвал */
+        footer {
+            background: var(--deep-sea);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 225, 255, 0.2);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            color: var(--biolum);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--biolum);
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--foam);
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--biolum);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info i {
+            color: var(--biolum);
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 225, 255, 0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--foam);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--biolum);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0, 225, 255, 0.1);
+            color: rgba(168, 230, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .zone-container {
+                flex-direction: column;
+            }
+            
+            .zone-photo {
+                min-height: 250px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .zone-container {
+                flex-direction: column;
+            }
+            
+            .zone-photo {
+                min-height: 250px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        
+        @media (max-width: 768px) {
+            .zone-container {
+                flex-direction: column;
+            }
+            
+            .zone-photo {
+                min-height: 250px;
+            }
+      
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0, 9, 19, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--biolum);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 1001;
+            }       
+    </style>
+</head>
+<body>
+    <div class="deep-background">
+        <div class="bubbles" id="bubbles"></div>
+    </div>
+<div class="menu-toggle"></div>
+    <nav class="deep-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">KAIYUKAN</a>
+            <ul class="nav-menu" style="list-style-type: none">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="exhibits.html" class="nav-link">Отзывы</a></li>
+                <li><a href="tickets.html" class="nav-link">Билеты</a></li>
+                <li><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="deep-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Тайны<br>глубин Осаки</h1>
+            <p class="hero-subtitle">Экскурсия по Kaiyukan - это экскурсия по Тихому океану</p>
+            <div class="hero-buttons">
+                <a href="tickets.html" class="deep-btn btn-primary">Купить билет</a>
+                <a href="#about" class="deep-btn btn-outline">Исследовать</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="deep-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Погружение начинается</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="deep-grid">
+                <div class="deep-card">
+                    <div class="card-icon">
+                        <i class="fas fa-fish-fins"></i>
+                    </div>
+                    <h3 class="card-title">Китовые акулы</h3>
+                    <p>Главные звёзды океанариума — величественные гиганты глубины.
+                        
+                    </p>
+                </div>
+                <div class="deep-card">
+                    <div class="card-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3 class="card-title">11,000 тонн</h3>
+                    <p>Один из крупнейших аквариумов мира с водой из Осакского залива</p>
+                </div>
+                <div class="deep-card">
+                    <div class="card-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="card-title">Тихоокеанское кольцо</h3>
+                    <p>Экспозиция повторяет путь вокруг Тихого океана</p>
+                </div>
+            </div>
+        </div>
+        <h2 class="section-title"  style="text-align: center; font-size: 2rem; margin-top: 5rem"  >Мы расскажем вам о живых существах и природной среде, сосредоточенной в Тихом океане</h2>
+  
+    <!-- Карточка зоны 1 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_PacificOcean.jpg" alt="Тихий океан">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Тихий океан</h2>
+                <p class="zone-description">
+                    Тихий океан, на долю которого приходится 1/3 площади поверхности Земли, является домом для самых разных существ.В аквариуме обитает множество существ, в том числе величественная китовая акула, грациозно порхающие итомаки и стая гурукума.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Акулы</span>
+                    <span class="tag">Скаты</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+        
+    <!-- Карточка зоны 2 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_TasmanSea.jpg" alt="Тасманово море">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Тасманово море</h2>
+                <p class="zone-description">
+                    Воссоздано Тасманово море, расположенное между Австралией и Новой Зеландией 
+                    В этом аквариуме дельфины плавают особенно динамично, демонстрируя 
+                    свою природную грацию и скорость.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Дельфины</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div> 
+        
+    <!-- зона 3 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_JapanDeep.jpg" alt="Японский жёлоб">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Японский жёлоб</h2>
+                <p class="zone-description">
+                    Японский жёлоб простирается с севера на юг на 800 км, а самая глубокая - на 8000 м. Этот резервуар воссоздает мир морских глубин, где глубина воды превышает 200 метров, куда не проникает солнечный свет
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Японский краб-паук</span>
+                    
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div> 
+        
+      <!-- зона 4 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_CookStrait.jpg" alt="Пролив Кука">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Пролив Кука</h2>
+                <p class="zone-description">
+                    Пролив Кука в Новой Зеландии. Живые существа обитают в промежутке между Северным островом, где наблюдается активная вулканическая активность, и Южным островом, где до сих пор сохранились древние ледники.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Исузу</span>
+                    <span class="tag">Рыба Фугу</span>
+                    <span class="tag">Зеленая морская черепаха</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div> 
+        
+      <!-- зона 5 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_CoastofChile.jpg" alt="Рифы Чили">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Рифы Чили</h2>
+                <p class="zone-description">
+                    Южноамериканское побережье Чили.В регионе протекает холодное течение Гумбольдта, а морская вода, поднимающаяся из морских глубин, способствует накоплению большего количества планктона.Сардины, которые питаются этим, образуют огромное стадо.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Сардины</span>
+                    <span class="tag">Анчоус</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>           
+        
+       <!-- зона 6 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_SetoInlandSea.jpg" alt="Внутреннее море Сето">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Внутреннее море Сето</h2>
+                <p class="zone-description">
+                    Внутреннее море Сето, усеянное множеством больших и малых островов и имеющее живописный вид, является богатым морем, которое питает самых разных существ.Здесь мы также выражаем связь между людьми и морем, например, плавающими стеклянными шарами и вазами с осьминогами.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Исаки</span>
+                    <span class="tag">Колючий омар</span>
+                    <span class="tag">Желтохвост</span>
+                    <span class="tag">Гиганский морской окунь</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div> 
+        
+       <!-- зона 7 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_GreatBarrierReef.jpg" alt="Большой Барьерный Риф">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Большой Барьерный Риф</h2>
+                <p class="zone-description">
+                    Самый большой коралловый риф в мире, тянущийся вдоль северо-восточного побережья Австралийского континента.Этот аквариум отражает великолепный пейзаж, который кораллы создавали в океане на протяжении многих лет, и повторяющуюся жизнь и смерть кораллов в нем.Это хорошая идея.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Рыбы-попугаи</span>
+                    <span class="tag">Рыбы-бабочки</span>
+                    <span class="tag">Мурены</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>          
+        
+        
+      <!-- зона 8 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_EcuadorRainForest.jpg" alt="Эквадорский Тропический лес">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Эквадорский Тропический лес</h2>
+                <p class="zone-description">
+                    Тропические леса - самый богатый биологическим разнообразием регион на Земле.Он отличается пышной зеленью и водно-болотными угодьями.В воде плавают огромные рыбы Пиларук.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Водяные черепахи</span>
+                    <span class="tag">Арапайма</span>
+                    <span class="tag">Рыба-ангел</span>
+                    <span class="tag">Красная Пиранья</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>           
+     
+       <!-- зона 9 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_GulfofPanama.jpg" alt="Панамский залив">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Панамский залив</h2>
+                <p class="zone-description">
+                    Панамский залив, расположенный в Центральной Америке.В этом аквариуме воссоздан сухой сезон тропиков.На суше бурый медведь, для которого характерен рисунок хвоста, активно передвигается, а рыбы, такие как халисенбон, плавают в воде.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Морской окунь</span>
+                    <span class="tag">Карликовый фугу</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>  
+        
+           <!-- зона 10 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_MontereyBay.jpg" alt="Монтеррейский залив">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Монтеррейский залив</h2>
+                <p class="zone-description">
+                    Калифорния, США.Залив Монтерей - один из крупнейших каньонов в мире.Динамичное плавание между узкими скалами и дикая жизнь морских львов, называемых Гаремами, также являются яркими моментами.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Морской окунь</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>     
+        
+            <!-- зона 11 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_AleutianIslands.jpg" alt="Алеутские Архипелаг">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Алеутские Архипелаг</h2>
+                <p class="zone-description">
+                    Длина островов составляет 2000 км.В этом богатом питательными веществами море собирается множество живых существ.В этом аквариуме обитает ныряющая морская птица по имени этопилика, у которой красивый клюв.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Этопилика</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>    
+        
+           <!-- зона 12 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_JapanForest.jpg" alt="Леса Японии">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Леса Японии</h2>
+                <p class="zone-description">
+                    Шум водопада, эхом отдающийся в лесу, зелень мха, который намокает от капель, и деревья, которые меняют свое выражение каждый сезон. И существа, которые живут на берегу горного ручья.Если бы выдры все еще жили в Японии сегодня, такая сцена могла бы распространиться.
+
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Выдры</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>     
+       
+           <!-- зона 13 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_Antarctica.jpg" alt="Антарктида">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Антарктида</h2>
+                <p class="zone-description">
+                    Большая часть Антарктиды покрыта льдом и называется "ледяным континентом".В таких полярных регионах ярко живут пингвины.
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Пингвины</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>     
+        
+           <!-- зона 14 -->
+    <div class="zone-container">
+        <div class="zone-photo">
+            <img src="https://www.kaiyukan.com/assets/img/about/exhibition/img_FalklandIslands.jpg" alt="Фолклендские острова">
+        </div>
+        
+        <div class="zone-info">
+            <div class="info-panel">
+                <h2 class="zone-title">Фолклендские острова</h2>
+                <p class="zone-description">
+                    Расположенные в Южной части Атлантического океана, острова богаты питательными веществами из холодной воды, доставляемой из Антарктиды, и здесь питается множество жизней..
+                </p>
+                
+                <div class="zone-tags">
+                    <span class="tag">Дельфины</span>
+                </div>
+                
+                <a href="#" class="zone-link">
+                    Посмотрите на существ в этом аквариуме
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>     
+        
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">KAIYUKAN</h3>
+                <p>Один из самых больших и красивых океанариумов мира, расположенный в Осаке, Япония.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>1-1-10 Kaigandori, Minato-ku, Osaka 552-0022</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>+81 6-6576-5501</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@kaiyukan.com</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <span> график 10:00 - 20:00 </span>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Как добраться</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.016410680832!2d135.4098433155936!3d34.654438880439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e655b05f190f%3A0x3a3a3a3a3a3a3a3a!2sKaiyukan!5e0!3m2!1sen!2sjp!4v1620000000000!5m2!1sen!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2023 Океанариум KAIYUKAN. Все права защищены.
+        </div>
+    </footer>
+    <script>
+        // Создание пузырей
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            const bubbleCount = 30;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Рандомные параметры
+                const size = Math.random() * 40 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(bubble);
+            }
+        }
+        
+        // Мобильное меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Плавный скролл
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if(this.getAttribute('href') !== '#') {
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                
+                if(navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+        
+        // Эффект при скролле для навигации
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.deep-nav');
+            if(window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        window.addEventListener('load', createBubbles);
+    </script>
+</body>
+</html>
