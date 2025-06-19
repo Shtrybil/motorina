@@ -167,7 +167,8 @@
             background: linear-gradient(to right, var(--foam), var(--biolum));
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
+            color: #000E25;
+            font-weight: bold;
             line-height: 1.1;
             text-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
         }
@@ -177,6 +178,7 @@
             max-width: 600px;
             margin-bottom: 2rem;
             color: rgba(168, 230, 255, 0.9);
+            margin-top: 2rem;
         }
 
         .hero-buttons {
@@ -572,13 +574,12 @@
             }
             
             .hero-title {
-                font-size: 2rem;
-                margin-bottom: 1rem;
+                font-size: 1.5rem;
             }
             
             .hero-subtitle {
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
+                font-size: 0.8rem;
+                margin-bottom: 0.7rem;
             }
             
             .hero-buttons {
@@ -587,7 +588,7 @@
             }
             
             .deep-btn {
-                width: 100%;
+                width: 80%;
                 text-align: center;
             }
             
@@ -601,6 +602,7 @@
             
             .card-title {
                 font-size: 1.2rem;
+                color: var(--biolum)
             }
             
             .footer-container {
@@ -610,6 +612,11 @@
             .contact-info span {
                 font-size: 0.85rem;
             }
+            
+            .deep-hero{background-size: contain;
+                align-items: flex-end;
+            }
+
         }
 
         @media (min-width: 769px) {
@@ -646,7 +653,7 @@
 
     <section class="deep-hero">
         <div class="hero-content">
-            <h1 class="hero-title">Тайны<br>глубин Осаки</h1>
+            <h1 class="hero-title">Океанариум<br>KAIYUKAN</h1>
             <p class="hero-subtitle">Экскурсия по Kaiyukan - это экскурсия по Тихому океану</p>
             <div class="hero-buttons">
                 <a href="tickets.html" class="deep-btn btn-primary">Купить билет</a>
